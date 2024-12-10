@@ -1,0 +1,59 @@
+apply plugin: 'com.android.application'
+
+android {
+    namespace "mm.pndaza.annyanissaya"
+    compileSdk 34
+//    buildToolsVersion = '34.0.0'
+    defaultConfig {
+        applicationId "mm.pndaza.annyanissaya"
+        minSdk 21
+        targetSdk 35
+        versionCode 1
+        versionName "1-01-2025"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = '1.8'
+        targetCompatibility = '1.8'
+    }
+
+
+    assetPacks = [":install_time_asset_pack"]
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.2.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'androidx.annotation:annotation:1.9.1'
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.22"))
+
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    // doesn't work with maven
+    // implementation 'com.github.barteksc:android-pdf-viewer:3.2.0-beta.1'
+    // maven
+    implementation 'com.github.mhiew:android-pdf-viewer:3.2.0-beta.3'
+    // play asset
+    // implementation 'com.google.android.play:asset-delivery:2.2.2'
+
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
