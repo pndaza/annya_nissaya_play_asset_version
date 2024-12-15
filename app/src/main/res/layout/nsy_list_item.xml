@@ -8,7 +8,7 @@
 	<androidx.appcompat.widget.AppCompatImageView
 		android:id="@+id/cover"
 		android:layout_width="match_parent"
-		android:layout_height="350dp"
+		android:layout_height="320dp"
 		android:scaleType="fitCenter"
 		android:layout_margin="8dp"/>
 	<TextView
@@ -16,7 +16,8 @@
 		android:layout_width="match_parent"
 		android:layout_height="wrap_content"
 		android:textAlignment="center"
-		android:padding="8dp"
+		android:paddingLeft="8dp"
+		android:paddingRight="8dp"
 		android:textSize="20sp"
 		android:gravity="center_horizontal" />
 </LinearLayout>

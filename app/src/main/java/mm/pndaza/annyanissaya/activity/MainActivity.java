@@ -4,6 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,13 +21,19 @@ import mm.pndaza.annyanissaya.database.DBOpenHelper;
 import mm.pndaza.annyanissaya.model.Category;
 import mm.pndaza.annyanissaya.model.PaliBook;
 import mm.pndaza.annyanissaya.utils.MDetect;
+import mm.pndaza.annyanissaya.utils.SharePref;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean nightMode;
+    private SharePref sharePref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        sharePref = SharePref.getInstance(this);
+        nightMode = sharePref.getNightMode();
 
         MDetect.init(this);
         String title = getResources().getString(R.string.app_name_mm);
@@ -73,6 +82,9 @@ public class MainActivity extends AppCompatActivity {
         if (id == R.id.action_about) {
             ShowAboutDialog();
             return true;
+        } else if (id == R.id.menu_night_mode) {
+            changeNightMode(item);
+            return true;
         }
 
         return super.onOptionsItemSelected(item);
@@ -86,6 +98,17 @@ public class MainActivity extends AppCompatActivity {
                 // A null listener allows the button to dismiss the dialog and take no further action.
                 .setNegativeButton("OK", null)
                 .show();
+
+    }
+
+    private void changeNightMode(MenuItem item) {
+        nightMode = !nightMode;
+        Log.d( "nightMode", "night mode: "+ String.valueOf(nightMode));
+
+        AppCompatDelegate.setDefaultNightMode(nightMode ?
+                AppCompatDelegate.MODE_NIGHT_YES :
+                AppCompatDelegate.MODE_NIGHT_NO);
+        sharePref.setNightMode(nightMode);
 
     }
 }

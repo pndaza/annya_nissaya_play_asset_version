@@ -2,6 +2,7 @@
 <resources>
 
     <color name="color_primary">#090909</color>
+    <color name="color_primary_dark">#090909</color>
     <color name="color_primary_variant">#000000</color>
     <color name="color_secondary">#FF5823</color>
     <color name="color_secondary_variant">#FF7043</color>

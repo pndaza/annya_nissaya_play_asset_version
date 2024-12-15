@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,15 +20,40 @@ import mm.pndaza.annyanissaya.adapter.NsyAdapter;
 import mm.pndaza.annyanissaya.database.DBOpenHelper;
 import mm.pndaza.annyanissaya.model.Nsy;
 import mm.pndaza.annyanissaya.utils.MDetect;
+import mm.pndaza.annyanissaya.utils.SharePref;
 
 public class NsySelectActivity extends AppCompatActivity implements NsyAdapter.OnItemClickListener {
     private String bookId;
     private int pageNumber;
+    private boolean isOpenedByDeepLink = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        SharePref sharePref = SharePref.getInstance(this);
+        if (sharePref.getNightMode()) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nsy_select);
+
+        getOnBackPressedDispatcher().addCallback(this, new OnBackPressedCallback(true) {
+            @Override
+            public void handleOnBackPressed() {
+                if (isOpenedByDeepLink) {
+                    finish();
+                    // open main activity
+                    Intent intent = new Intent(NsySelectActivity.this, MainActivity.class);
+                    startActivity(intent);
+                } else {
+
+                    finish();
+                }
+            }
+        });
 
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -100,6 +127,7 @@ public class NsySelectActivity extends AppCompatActivity implements NsyAdapter.O
                 Log.e("DeepLink", "Invalid deep link parameters");
                 // Handle the error (e.g., show an error message to the user)
             }
+            isOpenedByDeepLink = true;
 
         }
     }
